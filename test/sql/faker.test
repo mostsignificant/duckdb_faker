@@ -1,0 +1,23 @@
+# name: test/sql/faker.test
+# description: test faker extension
+# group: [faker]
+
+# Before we load the extension, this will fail
+statement error
+SELECT faker('Sam');
+----
+Catalog Error: Scalar Function with name faker does not exist!
+
+# Require statement will ensure this test is run with this extension loaded
+require faker
+
+# Confirm the extension works
+query I
+SELECT faker('Sam');
+----
+Faker Sam 🐥
+
+query I
+SELECT faker_openssl_version('Michael');
+----
+<REGEX>:Faker Michael, my linked OpenSSL version is OpenSSL.*
